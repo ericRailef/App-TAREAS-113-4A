@@ -27,3 +27,39 @@ def crear_tarea(request):
         )
         return redirect('inicio')
     return render (request, 'tareasapp/crear.html')
+
+
+def detalle_tarea(request, id):
+    tarea = Tarea.objects.get(id=id)
+
+    return render(request, 'tareasapp/detalle.html', {
+        'tarea': tarea
+    })
+
+
+def editar_tarea(request, id):
+    tarea = Tarea.objects.get(id=id)
+
+    if request.method == 'POST':
+        tarea.titulo = request.POST['titulo']
+        tarea.descripcion = request.POST['descripcion']
+        tarea.completada = 'completada' in request.POST
+
+        tarea.save()
+        return redirect('inicio')
+    
+    return render(request, 'tareasapp/editar.html', {
+        'tarea': tarea
+    })
+
+def eliminar_tarea(request, id):
+    tarea = Tarea.objects.get(id=id)
+
+    if request.method == 'POST':
+        tarea.delete()
+
+        return redirect('inicio')
+    
+    return render(request, 'tareasapp/eliminar.html', {
+        'tarea': tarea
+    })
