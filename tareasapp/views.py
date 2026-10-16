@@ -35,6 +35,13 @@ def crear_tarea(request):
         return redirect('inicio')
     return render (request, 'tareasapp/crear.html')
 
+def detalle_tarea(request, id):
+    tarea = Tarea.objects.get(id=id)
+
+    return render(request, 'tareasapp/detalle.html',{
+        'tarea': tarea
+    })
+
 
 def detalle_tarea(request, id):
     tarea = Tarea.objects.get(id=id)
@@ -66,6 +73,8 @@ def eliminar_tarea(request, id):
         tarea.delete()
 
         return redirect('inicio')
+    return render(request, 'tareasapp/eliminar.html', {
+        'tarea' : tarea
     
     return render(request, 'tareasapp/eliminar.html', {
         'tarea': tarea
